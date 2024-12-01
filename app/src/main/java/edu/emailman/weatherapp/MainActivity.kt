@@ -22,6 +22,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import edu.emailman.weatherapp.pages.ConnectivityState
 import edu.emailman.weatherapp.pages.WeatherHomeScreen
+import edu.emailman.weatherapp.pages.WeatherHomeUiState
 import edu.emailman.weatherapp.pages.WeatherHomeViewModel
 import edu.emailman.weatherapp.ui.theme.WeatherAppTheme
 
@@ -43,7 +44,8 @@ fun WeatherApp(
     client: FusedLocationProviderClient,
     modifier: Modifier = Modifier) {
 
-    val weatherHomeViewModel: WeatherHomeViewModel = viewModel()
+    val weatherHomeViewModel: WeatherHomeViewModel =
+        viewModel(factory = WeatherHomeViewModel.Factory)
     val context = LocalContext.current
     var permissionGranted by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(
@@ -77,7 +79,11 @@ fun WeatherApp(
 
     WeatherAppTheme {
         WeatherHomeScreen(
+            onRefresh = {
+                weatherHomeViewModel.uiState = WeatherHomeUiState.Loading
+                weatherHomeViewModel.getWeatherData()
+            },
             isConnected = connectivityState == ConnectivityState.Available,
-            weatherHomeViewModel.uiState)
+            uiState = weatherHomeViewModel.uiState)
     }
 }

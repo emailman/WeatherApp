@@ -13,9 +13,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -43,6 +47,7 @@ import kotlin.text.Typography.degree
 @Composable
 fun WeatherHomeScreen(
     isConnected: Boolean,
+    onRefresh: () -> Unit,
     uiState: WeatherHomeUiState,
     modifier: Modifier = Modifier
 ) {
@@ -80,12 +85,30 @@ fun WeatherHomeScreen(
                     )
                 } else {
                     when (uiState) {
-                        is WeatherHomeUiState.Error -> Text("Failed to fetch data")
+                        is WeatherHomeUiState.Error -> ErrorSection("Failed to fetch data",
+                            onRefresh = onRefresh)
                         is WeatherHomeUiState.Loading -> Text("Loading ...")
                         is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ErrorSection(
+    message: String,
+    onRefresh: () -> Unit,
+    modifier: Modifier = Modifier) {
+    Column {
+        Text(message)
+        Spacer(modifier = Modifier.height(8.dp))
+        IconButton(
+            onClick = onRefresh,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Icon(Icons.Default.Refresh, contentDescription = null, tint = Color.White)
         }
     }
 }
@@ -245,7 +268,9 @@ fun ForecastWeatherItem(
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
-                modifier = Modifier.size(40.dp).padding(top = 4.dp, bottom = 4.dp)
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(top = 4.dp, bottom = 4.dp)
             )
             Spacer(modifier = Modifier.width(20.dp))
 
