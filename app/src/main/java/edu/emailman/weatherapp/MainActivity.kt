@@ -20,12 +20,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.AndroidEntryPoint
 import edu.emailman.weatherapp.pages.ConnectivityState
 import edu.emailman.weatherapp.pages.WeatherHomeScreen
 import edu.emailman.weatherapp.pages.WeatherHomeUiState
 import edu.emailman.weatherapp.pages.WeatherHomeViewModel
 import edu.emailman.weatherapp.ui.theme.WeatherAppTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +46,7 @@ fun WeatherApp(
     client: FusedLocationProviderClient,
     modifier: Modifier = Modifier) {
 
-    val weatherHomeViewModel: WeatherHomeViewModel =
-        viewModel(factory = WeatherHomeViewModel.Factory)
+    val weatherHomeViewModel: WeatherHomeViewModel = viewModel()
     val context = LocalContext.current
     var permissionGranted by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(

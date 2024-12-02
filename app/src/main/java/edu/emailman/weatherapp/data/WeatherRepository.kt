@@ -1,18 +1,21 @@
 package edu.emailman.weatherapp.data
 
-import edu.emailman.weatherapp.network.WeatherApi
+import edu.emailman.weatherapp.network.WeatherApiService
+import javax.inject.Inject
 
 interface WeatherRepository {
     suspend fun getCurrentWeather(endUrl: String): CurrentWeather
     suspend fun getForecastWeather(endUrl: String): ForecastWeather
 }
 
-class WeatherClassImpl : WeatherRepository {
+class WeatherRepositoryImpl @Inject constructor(
+    private val weatherApiService: WeatherApiService
+) : WeatherRepository {
     override suspend fun getCurrentWeather(endUrl: String): CurrentWeather {
-        return WeatherApi.retrofitService.getCurrentWeather(endUrl)
+        return weatherApiService.getCurrentWeather(endUrl)
     }
 
     override suspend fun getForecastWeather(endUrl: String): ForecastWeather {
-        return WeatherApi.retrofitService.getForecastWeather(endUrl)
+        return weatherApiService.getForecastWeather(endUrl)
     }
 }

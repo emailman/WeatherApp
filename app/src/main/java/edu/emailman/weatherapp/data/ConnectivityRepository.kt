@@ -7,13 +7,14 @@ import edu.emailman.weatherapp.pages.ConnectivityState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 interface ConnectivityRepository {
     val connectivityState: StateFlow<ConnectivityState>
 }
 
-class DefaultConnectivityRepository(
-    val connectivityManager: ConnectivityManager
+class DefaultConnectivityRepository @Inject constructor(
+    private val connectivityManager: ConnectivityManager
 ) : ConnectivityRepository {
     private val _connectivityState =
         MutableStateFlow<ConnectivityState>(ConnectivityState.Unavailable)
