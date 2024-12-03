@@ -11,6 +11,7 @@ import edu.emailman.weatherapp.data.ConnectivityRepository
 import edu.emailman.weatherapp.data.CurrentWeather
 import edu.emailman.weatherapp.data.ForecastWeather
 import edu.emailman.weatherapp.data.WeatherRepository
+import edu.emailman.weatherapp.utils.WEATHER_API_KEY
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.StateFlow
@@ -52,13 +53,13 @@ class WeatherHomeViewModel @Inject constructor(
     }
 
     private suspend fun getCurrentData() : CurrentWeather {
-        val endURL = "weather?lat=$latitude&lon=$longitude&appid=f282e6810344a266faf4e7311d63359d&units=imperial"
+        val endURL = "weather?lat=$latitude&lon=$longitude&appid=$WEATHER_API_KEY&units=imperial"
         println("$latitude $longitude")
         return weatherRepository.getCurrentWeather(endURL)
     }
 
     private suspend fun getForecastData() : ForecastWeather {
-        val endURL = "forecast?lat=$latitude&lon=$longitude&appid=f282e6810344a266faf4e7311d63359d&units=imperial"
+        val endURL = "forecast?lat=$latitude&lon=$longitude&appid=$WEATHER_API_KEY&units=imperial"
         return weatherRepository.getForecastWeather(endURL)
     }
 }
