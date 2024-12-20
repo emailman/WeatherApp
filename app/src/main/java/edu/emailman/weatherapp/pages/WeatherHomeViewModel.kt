@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherHomeViewModel @Inject constructor(
-    private val connectivityRepository: ConnectivityRepository,
+    connectivityRepository: ConnectivityRepository,
     private val weatherRepository: WeatherRepository
 ): ViewModel() {
     var uiState: WeatherHomeUiState by mutableStateOf(WeatherHomeUiState.Loading)

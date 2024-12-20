@@ -99,8 +99,8 @@ fun WeatherHomeScreen(
 @Composable
 fun ErrorSection(
     message: String,
-    onRefresh: () -> Unit,
-    modifier: Modifier = Modifier) {
+    onRefresh: () -> Unit
+    ) {
     Column {
         Text(message)
         Spacer(modifier = Modifier.height(8.dp))
@@ -227,7 +227,6 @@ fun CurrentWeatherSection(
 @Composable
 fun ForecastWeatherSection(
     forecastItems: List<ForecastWeather.ForecastItem?>,
-    modifier: Modifier = Modifier
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(6.dp)
