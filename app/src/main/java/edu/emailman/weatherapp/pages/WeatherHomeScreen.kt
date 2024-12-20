@@ -195,7 +195,7 @@ fun CurrentWeatherSection(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    "Visibility ${currentWeather.visibility}m",
+                    "Visibility ${currentWeather.visibility?.toInt()?.div(1000)}km",
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -243,7 +243,7 @@ fun ForecastWeatherItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.5f)),
+        colors = CardDefaults.cardColors(containerColor = Color.DarkGray.copy(alpha = 0.5f)),
         modifier = modifier
     ) {
         Column (
