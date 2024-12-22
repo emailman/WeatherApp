@@ -28,7 +28,11 @@ data class CurrentWeather(
     @SerializedName("weather")
     val weather: List<Weather?>? = null,
     @SerializedName("wind")
-    val wind: Wind? = null
+    val wind: Wind? = null,
+    @SerializedName("wind_speed")
+    val windSpeed: Number? = 0,
+    @SerializedName("wind_gust")
+    val windGust: Number? = 0
 ) {
     data class Clouds(
         @SerializedName("all")

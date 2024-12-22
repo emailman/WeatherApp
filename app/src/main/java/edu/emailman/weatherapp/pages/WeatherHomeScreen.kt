@@ -41,6 +41,7 @@ import edu.emailman.weatherapp.data.ForecastWeather
 import edu.emailman.weatherapp.utils.DEGREE
 import edu.emailman.weatherapp.utils.getFormattedDate
 import edu.emailman.weatherapp.utils.getIconUrl
+import java.util.Locale
 import kotlin.text.Typography.degree
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +61,7 @@ fun WeatherHomeScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            "Weather App",
+                            "Ginny's Weather App",
                             style = MaterialTheme.typography.titleLarge
                         )
                     },
@@ -187,15 +188,33 @@ fun CurrentWeatherSection(
         ) {
             Column {
                 Text(
+                    "Wind Speed ${currentWeather.windSpeed} mph",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    "Wind Gust ${currentWeather.windGust} mph",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
                     "Humidity ${currentWeather.main?.humidity}%",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    "Pressure ${currentWeather.main?.pressure}hPa",
+                    "Pressure " +
+                            String.format(Locale.getDefault(),
+                                "%.2f",
+                                currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0
+                            )
+                            + " inHg",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    "Visibility ${currentWeather.visibility?.toInt()?.div(1000)}km",
+                    "Visibility " +
+                            String.format(
+                                Locale.getDefault(),
+                                "%.1f",
+                                currentWeather.visibility?.toDouble()?.div(1610) ?: 0)
+                            +" mi",
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -203,7 +222,7 @@ fun CurrentWeatherSection(
 
             Surface(modifier = Modifier
                 .width(2.dp)
-                .height(100.dp)) {  }
+                .height(120.dp)) {  }
 
             Spacer(modifier = Modifier.width(20.dp))
 
