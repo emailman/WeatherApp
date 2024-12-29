@@ -61,7 +61,7 @@ fun WeatherHomeScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            "Ginny's Weather App",
+                            "Weather App by Eric",
                             style = MaterialTheme.typography.titleLarge
                         )
                     },
@@ -101,7 +101,7 @@ fun WeatherHomeScreen(
 fun ErrorSection(
     message: String,
     onRefresh: () -> Unit
-    ) {
+) {
     Column {
         Text(message)
         Spacer(modifier = Modifier.height(8.dp))
@@ -188,15 +188,25 @@ fun CurrentWeatherSection(
         ) {
             Column {
                 Text(
-                    "Wind Speed ${currentWeather.windSpeed} mph",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    "Wind Gust ${currentWeather.windGust} mph",
+                    "Wind Speed " +
+                            String.format(
+                                Locale.getDefault(),
+                                "%.0f",
+                                currentWeather.wind?.speed?.toDouble() ?: 0) +
+                            " mph",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
                     "Humidity ${currentWeather.main?.humidity}%",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    "Visibility " +
+                            String.format(
+                                Locale.getDefault(),
+                                "%.1f",
+                                currentWeather.visibility?.toDouble()?.div(1610) ?: 0)
+                            + " mi",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
@@ -206,15 +216,6 @@ fun CurrentWeatherSection(
                                 currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0
                             )
                             + " inHg",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    "Visibility " +
-                            String.format(
-                                Locale.getDefault(),
-                                "%.1f",
-                                currentWeather.visibility?.toDouble()?.div(1610) ?: 0)
-                            +" mi",
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -228,7 +229,7 @@ fun CurrentWeatherSection(
 
             Column {
                 Text("Sunrise ${getFormattedDate(
-                    currentWeather.sys?.sunrise!!, 
+                    currentWeather.sys?.sunrise!!,
                     pattern = "hh:mm a")}",
                     style = MaterialTheme.typography.titleMedium
                 )

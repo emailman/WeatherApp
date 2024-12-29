@@ -43,6 +43,7 @@ class WeatherHomeViewModel @Inject constructor(
         viewModelScope.launch(exceptionHandler) {
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
+                // println(currentWeather)
                 val forecastWeather = async { getForecastData() }.await()
                 WeatherHomeUiState.Success(Weather(currentWeather, forecastWeather))
             } catch (e: Exception) {
@@ -54,7 +55,7 @@ class WeatherHomeViewModel @Inject constructor(
 
     private suspend fun getCurrentData() : CurrentWeather {
         val endURL = "weather?lat=$latitude&lon=$longitude&appid=$WEATHER_API_KEY&units=imperial"
-        println("$latitude $longitude")
+        // println("$latitude $longitude")
         return weatherRepository.getCurrentWeather(endURL)
     }
 
