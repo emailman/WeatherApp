@@ -43,7 +43,7 @@ class WeatherHomeViewModel @Inject constructor(
         viewModelScope.launch(exceptionHandler) {
             uiState = try {
                 val currentWeather = async { getCurrentData() }.await()
-                // println(currentWeather)
+                // println(currentWeather)  // data converted from API Reply
                 val forecastWeather = async { getForecastData() }.await()
                 WeatherHomeUiState.Success(Weather(currentWeather, forecastWeather))
             } catch (e: Exception) {
