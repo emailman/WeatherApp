@@ -55,7 +55,7 @@ class WeatherHomeViewModel @Inject constructor(
 
     private suspend fun getCurrentData() : CurrentWeather {
         val endURL = "weather?lat=$latitude&lon=$longitude&appid=$WEATHER_API_KEY&units=imperial"
-        // println("$latitude $longitude")
+        // println("$latitude $longitude")  // Base on phone's current location
         return weatherRepository.getCurrentWeather(endURL)
     }
 
