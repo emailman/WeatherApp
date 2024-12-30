@@ -41,6 +41,7 @@ import edu.emailman.weatherapp.data.ForecastWeather
 import edu.emailman.weatherapp.utils.DEGREE
 import edu.emailman.weatherapp.utils.getFormattedDate
 import edu.emailman.weatherapp.utils.getIconUrl
+import edu.emailman.weatherapp.utils.getWindDirection
 import java.util.Locale
 import kotlin.text.Typography.degree
 
@@ -81,13 +82,17 @@ fun WeatherHomeScreen(
                     .wrapContentSize()
             ) {
                 if (!isConnected) {
-                    Text("No Internet Connection",
+                    Text(
+                        "No Internet Connection",
                         style = MaterialTheme.typography.titleMedium
                     )
                 } else {
                     when (uiState) {
-                        is WeatherHomeUiState.Error -> ErrorSection("Failed to fetch data",
-                            onRefresh = onRefresh)
+                        is WeatherHomeUiState.Error -> ErrorSection(
+                            "Failed to fetch data",
+                            onRefresh = onRefresh
+                        )
+
                         is WeatherHomeUiState.Loading -> Text("Loading ...")
                         is WeatherHomeUiState.Success -> WeatherSection(weather = uiState.weather)
                     }
@@ -188,12 +193,12 @@ fun CurrentWeatherSection(
         ) {
             Column {
                 Text(
-                    "Wind Speed " +
-                            String.format(
-                                Locale.getDefault(),
-                                "%.0f",
-                                currentWeather.wind?.speed?.toDouble() ?: 0) +
-                            " mph",
+                    String.format(
+                        Locale.getDefault(),
+                        "Wind %.0f mph %s",
+                        currentWeather.wind?.speed?.toDouble() ?: 0,
+                        getWindDirection(currentWeather.wind?.deg)
+                    ),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
@@ -201,41 +206,49 @@ fun CurrentWeatherSection(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    "Visibility " +
-                            String.format(
-                                Locale.getDefault(),
-                                "%.1f",
-                                currentWeather.visibility?.toDouble()?.div(1610) ?: 0)
-                            + " mi",
+                    String.format(
+                        Locale.getDefault(),
+                        "Visibility %.1f mi",
+                        currentWeather.visibility?.toDouble()?.div(1610) ?: 0
+                    ),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    "Pressure " +
-                            String.format(Locale.getDefault(),
-                                "%.2f",
-                                currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0
-                            )
-                            + " inHg",
+                    String.format(
+                        Locale.getDefault(),
+                        "Pressure %.2f inHg",
+                        currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0
+                    ),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
             Spacer(modifier = Modifier.width(10.dp))
 
-            Surface(modifier = Modifier
-                .width(2.dp)
-                .height(120.dp)) {  }
+            Surface(
+                modifier = Modifier
+                    .width(2.dp)
+                    .height(120.dp)
+            ) { }
 
             Spacer(modifier = Modifier.width(20.dp))
 
             Column {
-                Text("Sunrise ${getFormattedDate(
-                    currentWeather.sys?.sunrise!!,
-                    pattern = "hh:mm a")}",
+                Text(
+                    "Sunrise ${
+                        getFormattedDate(
+                            currentWeather.sys?.sunrise!!,
+                            pattern = "hh:mm a"
+                        )
+                    }",
                     style = MaterialTheme.typography.titleMedium
                 )
-                Text("Sunset ${getFormattedDate(
-                    currentWeather.sys.sunset!!,
-                    pattern = "hh:mm a")}",
+                Text(
+                    "Sunset ${
+                        getFormattedDate(
+                            currentWeather.sys.sunset!!,
+                            pattern = "hh:mm a"
+                        )
+                    }",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -266,11 +279,11 @@ fun ForecastWeatherItem(
         colors = CardDefaults.cardColors(containerColor = Color.DarkGray.copy(alpha = 0.5f)),
         modifier = modifier
     ) {
-        Column (
+        Column(
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp)
-        ){
+        ) {
             Text(
                 getFormattedDate(item.dt!!, pattern = "EEE"),
                 style = MaterialTheme.typography.titleMedium

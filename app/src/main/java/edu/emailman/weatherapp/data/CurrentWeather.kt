@@ -86,10 +86,12 @@ data class CurrentWeather(
     )
 
     data class Wind(
+        @SerializedName("speed")
+        val speed: Number? = null,
         @SerializedName("deg")
         val deg: Number? = null,
-        @SerializedName("speed")
-        val speed: Number? = null
+        @SerializedName("gust")
+        val gust: Number? = null
     )
 }
 
