@@ -155,7 +155,7 @@ fun CurrentWeatherSection(
         )
 
         Text(
-            getFormattedDate(currentWeather.dt, pattern = "hh:mm:ss"),
+            getFormattedDate(currentWeather.dt, pattern = "hh:mm a"),
             style = MaterialTheme.typography.titleMedium
         )
 
