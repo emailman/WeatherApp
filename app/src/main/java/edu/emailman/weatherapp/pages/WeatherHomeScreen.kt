@@ -207,6 +207,14 @@ fun CurrentWeatherSection(
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
+                    String.format(
+                        Locale.getDefault(),
+                        "Wind Gust %.0f mph",
+                        currentWeather.wind?.gust?.toDouble() ?: 0
+                    ),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
                     "Humidity ${currentWeather.main?.humidity}%",
                     style = MaterialTheme.typography.titleMedium
                 )
