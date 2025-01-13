@@ -201,7 +201,7 @@ fun CurrentWeatherSection(
                     String.format(
                         Locale.getDefault(),
                         "Wind %.0f mph %s",
-                        currentWeather.wind?.speed?.toDouble() ?: 0,
+                        currentWeather.wind?.speed?.toDouble() ?: 0.0,
                         getWindDirection(currentWeather.wind?.deg)
                     ),
                     style = MaterialTheme.typography.titleMedium
@@ -210,7 +210,7 @@ fun CurrentWeatherSection(
                     String.format(
                         Locale.getDefault(),
                         "Wind Gust %.0f mph",
-                        currentWeather.wind?.gust?.toDouble() ?: 0
+                        currentWeather.wind?.gust?.toDouble() ?: 0.0
                     ),
                     style = MaterialTheme.typography.titleMedium
                 )
