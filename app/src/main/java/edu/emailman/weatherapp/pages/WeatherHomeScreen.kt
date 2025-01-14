@@ -222,7 +222,7 @@ fun CurrentWeatherSection(
                     String.format(
                         Locale.getDefault(),
                         "Pressure %.2f inHg",
-                        currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0
+                        currentWeather.main?.pressure?.toDouble()?.div(33.86) ?: 0.0
                     ),
                     style = MaterialTheme.typography.titleMedium
                 )
@@ -230,7 +230,7 @@ fun CurrentWeatherSection(
                     String.format(
                         Locale.getDefault(),
                         "Visibility %.1f mi",
-                        currentWeather.visibility?.toDouble()?.div(1610) ?: 0
+                        currentWeather.visibility?.toDouble()?.div(1610) ?: 0.0
                     ),
                     style = MaterialTheme.typography.titleMedium
                 )
